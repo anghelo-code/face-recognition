@@ -47,6 +47,7 @@ class FaceLogIn:
                 # step 8: read database
                 faces_database, names_database, info = self.face_utilities.read_face_database(self.database.faces)
 
+                print(len(faces_database))
                 if len(faces_database) != 0 and not self.comparison and self.matcher is None:
                     self.comparison = True
                     # step 9: compare faces

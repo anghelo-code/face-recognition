@@ -6,7 +6,7 @@
 # 	Description:  EXP project                                                  #
 #                                                                              #
 # ---------------------------------------------------------------------------- #
-#vex:disable=repl
+# vex:disable=repl
 
 # Library imports
 from vex import *

@@ -99,12 +99,38 @@ class FaceMatcherModels:
         except:
             return False, 0.0
 
+    # def face_matching_sface_model(self, face_1: np.ndarray, face_2: np.ndarray) -> Tuple[bool, float]:
+    #     try:
+    #         # result = DeepFace.verify(img1_path=face_1, img2_path=face_2, model_name=self.models[8])
+    #         result = DeepFace.verify(img1_path=face_1, img2_path=face_2, distance_metric="cosine", enforce_detection=False)
+    #         matching, distance = result['verified'], result['distance']
+    #         return matching, distance
+    #     except Exception as e:
+    #         print(f"An error occurred: {e}")
+    #         return False, 0.0
+
+
     def face_matching_sface_model(self, face_1: np.ndarray, face_2: np.ndarray) -> Tuple[bool, float]:
         try:
+            # Redimensionar las imágenes al mismo tamaño
+            target_size = (230, 230)  # Tamaño objetivo, por ejemplo, 224x224 píxeles
+            face_1 = cv2.resize(face_1, target_size)
+            face_2 = cv2.resize(face_2, target_size)
+
+            print(face_1.shape)
+            print(face_2.shape)
+       
+            cv2.imwrite("face_1_resized.jpg", face_1)
+            cv2.imwrite("face_2_resized.jpg", face_2)
+
+
             result = DeepFace.verify(img1_path=face_1, img2_path=face_2, model_name=self.models[8])
             matching, distance = result['verified'], result['distance']
+
             return matching, distance
-        except:
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
             return False, 0.0
 
     def face_matching_ghostfacenet_model(self, face_1: np.ndarray, face_2: np.ndarray) -> Tuple[bool, float]:
