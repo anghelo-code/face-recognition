@@ -1,0 +1,1 @@
+register_button: str = "process/gui/setup/images/register_button.png"
