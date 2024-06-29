@@ -225,7 +225,7 @@ class GraphicalUserInterface:
                     print(filepath)
                     lines = file.readlines()
                     print(lines)
-                    if len(lines) > 2:  # Si hay más de 2 líneas, hay accesos registrados
+                    if len(lines) > 1:  # Si hay más de 2 líneas, hay accesos registrados
                         aux = lines[0].strip()
                         # nombre, codigo = lines[0].strip().split(",")
                         aux = aux.split(",")

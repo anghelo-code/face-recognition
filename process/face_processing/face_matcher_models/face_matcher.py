@@ -113,12 +113,10 @@ class FaceMatcherModels:
     def face_matching_sface_model(self, face_1: np.ndarray, face_2: np.ndarray) -> Tuple[bool, float]:
         try:
             # Redimensionar las imágenes al mismo tamaño
-            target_size = (230, 230)  # Tamaño objetivo, por ejemplo, 224x224 píxeles
+            target_size = (230, 230)  # Tamaño objetivo, por ejemplo, 230x230 píxeles
             face_1 = cv2.resize(face_1, target_size)
             face_2 = cv2.resize(face_2, target_size)
 
-            print(face_1.shape)
-            print(face_2.shape)
        
             result = DeepFace.verify(img1_path=face_1, img2_path=face_2, model_name=self.models[8])
             matching, distance = result['verified'], result['distance']
