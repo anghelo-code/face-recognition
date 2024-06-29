@@ -1,1 +1,1 @@
-register_button: str = "process/gui/setup/images/register_button.png"
+register_button_path: str = "process/gui/setup/images/register_button.png"
