@@ -120,10 +120,6 @@ class FaceMatcherModels:
             print(face_1.shape)
             print(face_2.shape)
        
-            cv2.imwrite("face_1_resized.jpg", face_1)
-            cv2.imwrite("face_2_resized.jpg", face_2)
-
-
             result = DeepFace.verify(img1_path=face_1, img2_path=face_2, model_name=self.models[8])
             matching, distance = result['verified'], result['distance']
 
