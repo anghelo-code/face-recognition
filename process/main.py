@@ -3,7 +3,7 @@ import tkinter as Tk
 import imutils
 from PIL import Image, ImageTk
 import cv2
-
+from tkinter import ttk
 import sys
 
 import os
@@ -32,6 +32,7 @@ class GraphicalUserInterface:
         self.main_window.title('faces access control')
         self.main_window.geometry('1280x720')
         self.frame = CustomFrame(self.main_window)
+        self.tree = None
 
         # config stream
         self.cap = cv2.VideoCapture(0)
@@ -208,6 +209,41 @@ class GraphicalUserInterface:
         register_button.image = register_button_img
         register_button.place(x=780, y=545)
 
+    def update_table(self):
+        # Limpiar la tabla antes de actualizarla
+        for item in self.tree.get_children():
+            self.tree.delete(item)
+
+        # Ruta a la carpeta que contiene los archivos txt
+        directory = "process/database/users"
+        
+        # Iterar sobre todos los archivos en el directorio
+        for filename in os.listdir(directory):
+            if filename.endswith(".txt"):
+                filepath = os.path.join(directory, filename)
+                with open(filepath, "r") as file:
+                    print(filepath)
+                    lines = file.readlines()
+                    print(lines)
+                    if len(lines) > 2:  # Si hay más de 2 líneas, hay accesos registrados
+                        aux = lines[0].strip()
+                        # nombre, codigo = lines[0].strip().split(",")
+                        aux = aux.split(",")
+                        nombre = aux[0]
+                        codigo = aux[1]
+
+                        print(nombre, codigo)
+                        last_access = lines[-1].strip()
+                        date_time_str = last_access.split(" at: ")[-1]
+                        data = date_time_str.split(" ")
+                        if len(data) >= 2:
+
+                            date = data[0]
+                            time = data[1]
+                            print("fechas:  ",date, time)
+                            # print("gggg")
+                            self.tree.insert("", "end", text="", values=(nombre, date, time))
+
     def gui_register(self):
         self.register_window = Toplevel(self.frame)
         self.register_window.title('Lista de Alumnos')
@@ -219,6 +255,41 @@ class GraphicalUserInterface:
         background_register.image = background_register_img
         background_register.place(x=0, y=0)
 
+        # Crear el widget Treeview
+        self.tree = ttk.Treeview(self.register_window, height=20)
+
+        # Definir las columnas
+        self.tree["columns"] = ("col1", "col2", "col3")
+
+        # Configurar las columnas
+        self.tree.column("#0", width=0, stretch=Tk.NO)  # La primera columna es oculta por defecto
+        self.tree.column("col1", anchor=Tk.CENTER, width=150)
+        self.tree.column("col2", anchor=Tk.CENTER, width=300)
+        self.tree.column("col3", anchor=Tk.CENTER, width=300)
+
+        # Crear los encabezados de columna
+        self.tree.heading("#0", text="", anchor=Tk.CENTER)
+        self.tree.heading("col1", text="Nombre", anchor=Tk.CENTER)
+        self.tree.heading("col2", text="Fecha", anchor=Tk.CENTER)
+        self.tree.heading("col3", text="Hora", anchor=Tk.CENTER)
+
+        # # Insertar datos en la tabla
+        # tree.insert("", "end", text="", values=("Fila 1", "Dato 1-1", "Dato 1-2"))
+        # tree.insert("", "end", text="", values=("Fila 2", "Dato 2-1", "Dato 2-2"))
+        # tree.insert("", "end", text="", values=("Fila 3", "Dato 3-1", "Dato 3-2"))
+        # tree.insert("", "end", text="", values=("Fila 3", "Dato 3-1", "Dato 3-2"))
+        # tree.insert("", "end", text="", values=("Fila 3", "Dato 3-1", "Dato 3-2"))
+        # tree.insert("", "end", text="", values=("Fila 3", "Dato 3-1", "Dato 3-2"))
+        # tree.insert("", "end", text="", values=("Fila 3", "Dato 3-1", "Dato 3-2"))
+        # tree.insert("", "end", text="", values=("Fila 3", "Dato 3-1", "Dato 3-2"))
+        # tree.insert("", "end", text="", values=("Fila 3", "Dato 3-1", "Dato 3-2"))
+        # tree.insert("", "end", text="", values=("Fila 3", "Dato 3-1", "Dato 3-2"))
+        # tree.insert("", "end", text="", values=("Fila 7", "Dato 7-1", "Dato 7-2"))
+        # tree.insert("", "end", text="", values=("Fila 3", "Dato 3-1", "Dato 3-2"))
+        # tree.insert("", "end", text="", values=("Fila 3", "Dato 3-1", "Dato 3-2"))
+        self.update_table()
+        # Posicionar el Treeview en la ventana
+        self.tree.place(x=500, y=150)
 
     def main(self):
         # background
