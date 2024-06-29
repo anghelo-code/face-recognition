@@ -55,6 +55,9 @@ class GraphicalUserInterface:
         self.face_login_window = None
         self.login_video = None
 
+        # register
+        self.register_window = None
+
         # modules
         self.images = ImagePaths()
         self.database = DataBasePaths()
@@ -193,17 +196,29 @@ class GraphicalUserInterface:
         background_signup.place(x=0, y=0)
 
         # input data
-        self.input_name = Entry(self.signup_window)
-        self.input_name.place(x=585, y=320)
-        self.input_user_code = Entry(self.signup_window)
-        self.input_user_code.place(x=585, y=475)
+        self.input_name = Entry(self.signup_window, width=37)
+        self.input_name.place(x=752, y=470)
+        self.input_user_code = Entry(self.signup_window, width=37)
+        self.input_user_code.place(x=752, y=340)
 
         # input button
         register_button_img = PhotoImage(file=self.images.register_img)
         register_button = Button(self.signup_window, image=register_button_img, height="40", width="200",
                                  command=self.data_sign_up)
         register_button.image = register_button_img
-        register_button.place(x=1005, y=565)
+        register_button.place(x=780, y=545)
+
+    def gui_register(self):
+        self.register_window = Toplevel(self.frame)
+        self.register_window.title('Lista de Alumnos')
+        self.register_window.geometry("1280x720")
+
+        # background
+        background_register_img = PhotoImage(file=self.images.gui_register_img)
+        background_register = Label(self.register_window, image=background_register_img)
+        background_register.image = background_register_img
+        background_register.place(x=0, y=0)
+
 
     def main(self):
         # background
@@ -216,12 +231,16 @@ class GraphicalUserInterface:
         login_button_img = PhotoImage(file=self.images.login_img)
         login_button = Button(self.frame, image=login_button_img, height="40", width="200", command=self.gui_login)
         login_button.image = login_button_img
-        login_button.place(x=980, y=325)
+        login_button.place(x=810, y=325)
 
         signup_button_img = PhotoImage(file=self.images.signup_img)
         signup_button = Button(self.frame, image=signup_button_img, height="40", width="200", command=self.gui_signup)
         signup_button.image = signup_button_img
-        signup_button.place(x=980, y=578)
-
+        signup_button.place(x=810, y=470)
+        
+        register_button_img = PhotoImage(file=self.images.registerB_img)
+        register_button = Button(self.frame, image=register_button_img, height="40", width="200", command=self.gui_register)
+        register_button.image = register_button_img
+        register_button.place(x=810, y=604)
 
 
